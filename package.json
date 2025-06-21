@@ -4,7 +4,6 @@
   "description": "Backend for FullStack Project",
   "main": "index.js",
   "type": "module",
-
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,6 +14,7 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "mongoose": "^8.16.0",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "path-to-regexp": "^6.2.0"
   }
 }

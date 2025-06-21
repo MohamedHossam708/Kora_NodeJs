@@ -1,8 +1,7 @@
-import { mongo } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 
 
-
-const Schema = mongo.Schema({
+const UserSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -13,8 +12,7 @@ const Schema = mongo.Schema({
     state: { type: String, required: true },
     country: { type: String, required: true },
     role: { type: String, default: "user", enum: ["user", "admin"] },
-    profilePicture: { type: String, required: false },
-}, { timestamps: true })
+    profilePicture: { type: String }, 
+}, { timestamps: true });
 
-
-export const userModel = mongo.model("user", Schema);
+export const userModel = model("User", UserSchema);

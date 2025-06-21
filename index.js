@@ -1,27 +1,26 @@
-import express, { json, urlencoded } from 'express'
-import { mongoConection } from './DataBase/dbConnetion.js'
-import dotenv from 'dotenv'
+import express from 'express';
+import dotenv from 'dotenv';
+import  mongoConnection  from './DataBase/dbConnetion.js';
+import UserRouter from './Src/Modules/User/UserRoutes.js'
 
 
+dotenv.config();
+const app = express();
+const port = process.env.PORT || 3000;
 
+app.use(express.json());
 
+app.use('/', UserRouter);
 
-// insure that the .env file is loaded before using any environment variables
-// all the important data will be stored in the .env file
-dotenv.config()
-// create an instance of express
-const app = express()
-const port = 3000
-// parse incoming JSON requests
-app.use(json())
-// parse incoming URL-encoded requests
-app.use(urlencoded({ extended: true }))
-// connect to the MongoDB database
-mongoConection()
+// 404 handler
+app.all('*', (req, res, next) => {
+  res.status(404).json({ success: false, message: `Can't find ${req.originalUrl}` });
+});
 
+// global error handler
+app.use((err, req, res, next) => {
+  res.status(500).json({ success: false, message: err.message });
+});
 
-
-
-
-app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+mongoConnection()
+app.listen(port, () => console.log(`✅ Server running on port ${port}`));
